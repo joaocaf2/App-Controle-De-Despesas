@@ -4,19 +4,38 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Despesa {
+    private Integer id;
     private String descricao;
+    private String nome;
     private BigDecimal valor;
     private LocalDate data;
 
-    public Despesa(String descricao, BigDecimal valor, LocalDate data) {
+    public Despesa(String nome, String descricao, BigDecimal valor, LocalDate data) {
+        this.nome = nome;
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
     public Despesa(){
 
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public void setData(LocalDate data) {
         this.data = data;

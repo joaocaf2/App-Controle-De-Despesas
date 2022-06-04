@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/cadastro_despesa_activity_edtNomeDespesa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome da despesa"></EditText>
+
+    <EditText
+        android:id="@+id/cadastro_despesa_activity_edtDescDespesa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descrição para a despesa"></EditText>
+
+    <EditText
+        android:id="@+id/cadastro_despesa_activity_edtValorDespesa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valor da despesa"
+        android:inputType="numberDecimal"></EditText>
+
+    <EditText
+        android:id="@+id/cadastro_despesa_activity_edtDataDespesa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Data da despesa"
+        android:inputType="date"></EditText>
+
+
+</LinearLayout>

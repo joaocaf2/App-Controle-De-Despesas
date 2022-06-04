@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,17 +19,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class MainActivity extends AppCompatActivity {
+public class ListaDeDespesasActivity extends AppCompatActivity {
 
     private TableLayout tableDespesas;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Lista de despesas");
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.lista_de_despesas_activity);
         tableDespesas = findViewById(R.id.activity_main_table_layout_despesas);
         tableDespesas.setClickable(true);
         inicializaTabela();
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void inicializaTabela() {
         Despesa despesa = new Despesa("Qualquer coisa",
-                new BigDecimal("80.40"), LocalDate.parse("03-04-2020", formatter));
+                "qualquer descricao", new BigDecimal("80.40"), LocalDate.parse("03-04-2020", formatter));
         TableRow row = new TableRow(this);
 
         TextView coluna1 = new TextView(this);
