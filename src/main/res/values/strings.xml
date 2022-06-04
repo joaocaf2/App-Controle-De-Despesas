@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ControleDeDespesas</string>
+    <string name="nova_despesa">Nova Despesa</string>
 </resources>

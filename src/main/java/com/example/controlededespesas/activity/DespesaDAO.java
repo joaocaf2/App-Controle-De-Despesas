@@ -27,4 +27,13 @@ public class DespesaDAO {
     }
 
 
+    public Despesa findLast() {
+        if (despesas.isEmpty()) return null;
+        if (despesas.get(despesas.size() - 1) == null) return null;
+        return despesas.get(despesas.size() - 1);
+    }
+
+    public ArrayList<Despesa> findAll() {
+        return new ArrayList<>(despesas);
+    }
 }

@@ -1,13 +1,17 @@
 package com.example.controlededespesas.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +27,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
 
     private TableLayout tableDespesas;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private DespesaDAO dao = new DespesaDAO();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +37,52 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         tableDespesas = findViewById(R.id.activity_main_table_layout_despesas);
         tableDespesas.setClickable(true);
         inicializaTabela();
+    }
+
+    @Override
+    protected void onResume() {
+        if (dao.findLast() != null) {
+            adicionaLinhaATabela(dao.findLast());
+        }
+        super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.lista_de_despesas_activity_menu_opcoes, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.lista_de_despesas_activity_menu_nova_despesa) {
+            Intent intent = new Intent(this, CadastroDespesaActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void adicionaLinhaATabela(Despesa despesa) {
+        TableRow linha = new TableRow(this);
+        TextView colunaDescricao = new TextView(this);
+
+        colunaDescricao.setText(despesa.getDescricao());
+        colunaDescricao.setGravity(Gravity.CENTER);
+        linha.addView(colunaDescricao);
+
+        TextView colunaDespesa = new TextView(this);
+        colunaDespesa.setText(String.valueOf(despesa.getValor()));
+        colunaDespesa.setGravity(Gravity.CENTER);
+        linha.addView(colunaDespesa);
+
+        TextView colunaData = new TextView(this);
+        colunaData.setText(String.valueOf(despesa.getData().toString().
+                replace("-", "/")));
+        colunaData.setGravity(Gravity.CENTER);
+        linha.addView(colunaData);
+
+        tableDespesas.addView(linha);
 
     }
 
@@ -56,26 +107,5 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         row.addView(coluna3);
 
         tableDespesas.addView(row);
-        for (int i = 0; i < 5; i++) {
-            TableRow linha = new TableRow(this);
-            TextView colunaDescricao = new TextView(this);
-
-            colunaDescricao.setText(despesa.getDescricao());
-            colunaDescricao.setGravity(Gravity.CENTER);
-            linha.addView(colunaDescricao);
-
-            TextView colunaDespesa = new TextView(this);
-            colunaDespesa.setText(String.valueOf(despesa.getValor()));
-            colunaDespesa.setGravity(Gravity.CENTER);
-            linha.addView(colunaDespesa);
-
-            TextView colunaData = new TextView(this);
-            colunaData.setText(String.valueOf(despesa.getData().toString().
-                    replace("-", "/")));
-            colunaData.setGravity(Gravity.CENTER);
-            linha.addView(colunaData);
-
-            tableDespesas.addView(linha);
-        }
     }
 }
