@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.controlededespesas.R;
 
+import org.w3c.dom.Text;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +30,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
     private TableLayout tableDespesas;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private DespesaDAO dao = new DespesaDAO();
+    private TextView txtTotalDespesa;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +39,11 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         setContentView(R.layout.lista_de_despesas_activity);
         tableDespesas = findViewById(R.id.activity_main_table_layout_despesas);
         tableDespesas.setClickable(true);
+        inicializaViews();
+    }
+
+    private void inicializaViews() {
+        txtTotalDespesa = findViewById(R.id.lista_de_despesas_activity_textView_totalCalc);
         inicializaTabela();
     }
 
@@ -44,6 +52,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         if (dao.findLast() != null) {
             adicionaLinhaATabela(dao.findLast());
         }
+        atualizaTextViewTotalDespesas();
         super.onResume();
     }
 
@@ -61,6 +70,11 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void atualizaTextViewTotalDespesas() {
+        BigDecimal totalDespesas = dao.getTotalDespesas();
+        txtTotalDespesa.setText("R$ " + String.valueOf(totalDespesas));
     }
 
     private void adicionaLinhaATabela(Despesa despesa) {
@@ -94,16 +108,19 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         TextView coluna1 = new TextView(this);
         coluna1.setTextColor(Color.RED);
         coluna1.setText("Descrição");
+        coluna1.setTextSize(20.0F);
         row.addView(coluna1);
 
         TextView coluna2 = new TextView(this);
         coluna2.setText("Valor da despesa");
         coluna2.setTextColor(Color.RED);
+        coluna2.setTextSize(20.0F);
         row.addView(coluna2);
 
         TextView coluna3 = new TextView(this);
         coluna3.setText("Data");
         coluna3.setTextColor(Color.RED);
+        coluna3.setTextSize(10.0F);
         row.addView(coluna3);
 
         tableDespesas.addView(row);

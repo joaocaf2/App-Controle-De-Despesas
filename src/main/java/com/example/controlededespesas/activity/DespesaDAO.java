@@ -1,5 +1,8 @@
 package com.example.controlededespesas.activity;
 
+import android.util.Log;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,16 @@ public class DespesaDAO {
 
     }
 
+
+    public BigDecimal getTotalDespesas() {
+        BigDecimal total = new BigDecimal("0");
+        for (Despesa despesa : despesas) {
+            BigDecimal valor = despesa.getValor();
+            total = total.add(valor);
+        }
+        Log.i("TotalCerto?", String.valueOf(total));
+        return total;
+    }
 
     public Despesa findLast() {
         if (despesas.isEmpty()) return null;
