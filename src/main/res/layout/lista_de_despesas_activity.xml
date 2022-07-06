@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TableLayout
-        android:id="@+id/activity_main_table_layout_despesas"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1"
+        android:layout_height="match_parent"
+        android:id="@+id/lista_de_despesas_activity_listViewDespesas"
         >
-    </TableLayout>
+
+    </ListView>
 
     <TextView
         android:id="@+id/lista_de_despesas_activity_textView_total_info"
