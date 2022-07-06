@@ -1,7 +1,6 @@
 package com.example.controlededespesas.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,11 @@ public class DespesasAdatper extends BaseAdapter {
     public View getView(int posicao, View view, ViewGroup viewGroup) {
         View viewCriada = LayoutInflater.
                 from(context).inflate(R.layout.item_despesa, viewGroup, false);
+        setaOsDadosNasTextViews(posicao, viewCriada);
+        return viewCriada;
+    }
+
+    private void setaOsDadosNasTextViews(int posicao, View viewCriada) {
         TextView txtNomeDespesa = viewCriada.findViewById(R.id.item_nome_despesa);
         TextView txtDataDespesa = viewCriada.findViewById(R.id.item_data_despesa);
         TextView txtValorDespesa = viewCriada.findViewById(R.id.item_valor_despesa);
@@ -49,7 +53,6 @@ public class DespesasAdatper extends BaseAdapter {
         txtNomeDespesa.setText("Nome: " + despesa.getNome());
         txtDataDespesa.setText("Data: " + despesa.getNome());
         txtValorDespesa.setText("Valor: " + String.valueOf(despesa.getValor()));
-        return viewCriada;
     }
 
     public void atualizaDados(List<Despesa> despesas) {

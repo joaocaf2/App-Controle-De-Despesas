@@ -68,13 +68,11 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
     }
 
     private void populaDadosIniciaisNaListView() {
-        Log.i("Chamando...", "Chamando populaDadosIniciaisNaListView");
         Despesa despesa = new Despesa();
         despesa.setNome("Comprar pao");
         despesa.setDescricao("Comprei um pao do bao sô");
         despesa.setValor(new BigDecimal("40.80"));
         dao.adiciona(despesa);
-        Log.i("Dao? ", dao.findLast().getNome());
     }
 
     @Override
