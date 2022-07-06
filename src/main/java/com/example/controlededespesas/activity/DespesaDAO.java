@@ -36,7 +36,6 @@ public class DespesaDAO {
             BigDecimal valor = despesa.getValor();
             total = total.add(valor);
         }
-        Log.i("TotalCerto?", String.valueOf(total));
         return total;
     }
 

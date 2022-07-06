@@ -1,6 +1,7 @@
 package com.example.controlededespesas.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,13 +46,14 @@ public class DespesasAdatper extends BaseAdapter {
         TextView txtDataDespesa = viewCriada.findViewById(R.id.item_data_despesa);
         TextView txtValorDespesa = viewCriada.findViewById(R.id.item_valor_despesa);
         Despesa despesa = despesas.get(posicao);
-        txtNomeDespesa.setText(despesa.getNome());
-        txtDataDespesa.setText(despesa.getNome());
-        txtValorDespesa.setText(String.valueOf(despesa.getValor()));
+        txtNomeDespesa.setText("Nome: " + despesa.getNome());
+        txtDataDespesa.setText("Data: " + despesa.getNome());
+        txtValorDespesa.setText("Valor: " + String.valueOf(despesa.getValor()));
         return viewCriada;
     }
 
     public void atualizaDados(List<Despesa> despesas) {
+        this.despesas.clear();
         this.despesas.addAll(despesas);
         notifyDataSetChanged();
     }

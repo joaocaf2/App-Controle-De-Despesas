@@ -45,21 +45,30 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         setTitle("Lista de despesas");
         setContentView(R.layout.lista_de_despesas_activity);
         populaDadosIniciaisNaListView();
+        inicializaViews();
+        configuraAdapterListView();
+    }
+
+    private void inicializaViews() {
         lvDespesas = findViewById(R.id.lista_de_despesas_activity_listViewDespesas);
+        txtTotalDespesa = findViewById(R.id.lista_de_despesas_activity_textView_totalCalc);
+    }
+
+    private void configuraAdapterListView() {
         despesasAdatper = new DespesasAdatper(this);
         lvDespesas.setAdapter(despesasAdatper);
-
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
+        atualizaTextViewTotalDespesas();
         despesasAdatper.atualizaDados(dao.findAll());
-        despesasAdatper.notifyDataSetChanged();
     }
 
     private void populaDadosIniciaisNaListView() {
+        Log.i("Chamando...", "Chamando populaDadosIniciaisNaListView");
         Despesa despesa = new Despesa();
         despesa.setNome("Comprar pao");
         despesa.setDescricao("Comprei um pao do bao sô");
