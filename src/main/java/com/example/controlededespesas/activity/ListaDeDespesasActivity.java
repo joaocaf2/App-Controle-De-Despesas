@@ -31,7 +31,6 @@ import java.time.format.DateTimeFormatter;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ListaDeDespesasActivity extends AppCompatActivity {
-
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private DespesaDAO dao = new DespesaDAO();
     private TextView txtTotalDespesa;
@@ -72,6 +71,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         despesa.setNome("Comprar pao");
         despesa.setDescricao("Comprei um pao do bao sô");
         despesa.setValor(new BigDecimal("40.80"));
+        despesa.setData(LocalDate.now());
         dao.adiciona(despesa);
     }
 

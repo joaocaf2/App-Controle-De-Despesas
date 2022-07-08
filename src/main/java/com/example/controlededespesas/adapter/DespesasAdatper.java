@@ -1,20 +1,26 @@
 package com.example.controlededespesas.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.example.controlededespesas.R;
 import com.example.controlededespesas.activity.Despesa;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class DespesasAdatper extends BaseAdapter {
     private List<Despesa> despesas = new ArrayList<Despesa>();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private Context context;
 
     public DespesasAdatper(Context context) {
@@ -51,7 +57,7 @@ public class DespesasAdatper extends BaseAdapter {
         TextView txtValorDespesa = viewCriada.findViewById(R.id.item_valor_despesa);
         Despesa despesa = despesas.get(posicao);
         txtNomeDespesa.setText("Nome: " + despesa.getNome());
-        txtDataDespesa.setText("Data: " + despesa.getNome());
+        txtDataDespesa.setText("Data: " + "...");
         txtValorDespesa.setText("Valor: " + String.valueOf(despesa.getValor()));
     }
 
