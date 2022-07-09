@@ -57,7 +57,9 @@ public class DespesasAdatper extends BaseAdapter {
         TextView txtValorDespesa = viewCriada.findViewById(R.id.item_valor_despesa);
         Despesa despesa = despesas.get(posicao);
         txtNomeDespesa.setText("Nome: " + despesa.getNome());
-        txtDataDespesa.setText("Data: " + "...");
+        String dataString = formatter.format(despesa.getData())
+                .replace("-", "/");
+        txtDataDespesa.setText("Data: " + dataString);
         txtValorDespesa.setText("Valor: " + String.valueOf(despesa.getValor()));
     }
 
