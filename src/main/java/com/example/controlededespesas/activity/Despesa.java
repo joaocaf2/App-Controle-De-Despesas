@@ -9,12 +9,23 @@ public class Despesa {
     private String nome;
     private BigDecimal valor;
     private LocalDate data;
+    private boolean status;
 
     public Despesa(String nome, String descricao, BigDecimal valor, LocalDate data) {
         this.nome = nome;
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
+        this.status = false;
+    }
+
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean getStatus() {
+        return this.status;
     }
 
     public void setNome(String nome) {
@@ -25,9 +36,10 @@ public class Despesa {
         return nome;
     }
 
-    public Despesa(){
+    public Despesa() {
 
     }
+
 
     public void setId(Integer id) {
         this.id = id;

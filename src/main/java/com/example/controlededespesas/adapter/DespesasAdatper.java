@@ -55,12 +55,21 @@ public class DespesasAdatper extends BaseAdapter {
         TextView txtNomeDespesa = viewCriada.findViewById(R.id.item_nome_despesa);
         TextView txtDataDespesa = viewCriada.findViewById(R.id.item_data_despesa);
         TextView txtValorDespesa = viewCriada.findViewById(R.id.item_valor_despesa);
+        TextView txtStatusDespesa = viewCriada.findViewById(R.id.item_status_despesa);
+
         Despesa despesa = despesas.get(posicao);
         txtNomeDespesa.setText("Nome: " + despesa.getNome());
         String dataString = formatter.format(despesa.getData())
                 .replace("-", "/");
         txtDataDespesa.setText("Data: " + dataString);
         txtValorDespesa.setText("Valor: " + String.valueOf(despesa.getValor()));
+        String status = "";
+        if (despesa.getStatus() == true) {
+            status = "Pago";
+        } else {
+            status = "Pendente";
+        }
+        txtStatusDespesa.setText("Status: " + status);
     }
 
     public void atualizaDados(List<Despesa> despesas) {

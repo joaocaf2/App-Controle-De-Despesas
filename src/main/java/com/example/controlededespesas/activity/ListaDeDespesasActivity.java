@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,6 +57,18 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
     private void configuraAdapterListView() {
         despesasAdatper = new DespesasAdatper(this);
         lvDespesas.setAdapter(despesasAdatper);
+        lvDespesas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long l) {
+                Despesa despesa = (Despesa) adapterView.getItemAtPosition(posicao);
+                Integer idDespesa = despesa.getId();
+                Intent intent = new Intent(ListaDeDespesasActivity.this,
+                        CadastroDespesaActivity.class);
+                intent.putExtra("IdDespesaEditar", idDespesa);
+                startActivity(intent);
+
+            }
+        });
     }
 
 
@@ -72,6 +85,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         despesa.setDescricao("Comprei um pao do bao sô");
         despesa.setValor(new BigDecimal("40.80"));
         despesa.setData(LocalDate.now());
+        despesa.setStatus(false);
         dao.adiciona(despesa);
     }
 

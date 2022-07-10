@@ -2,7 +2,6 @@ package com.example.controlededespesas.activity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -19,8 +18,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.security.auth.login.LoginException;
-
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CadastroDespesaActivity extends AppCompatActivity {
 
@@ -36,11 +33,31 @@ public class CadastroDespesaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Cadastro de despesas");
         setContentView(R.layout.cadastro_despesa_activity);
         inicializaViews();
         despesa = new Despesa();
         dao = new DespesaDAO();
+        if (estaEmEdicao()) {
+            setaOsDadosEmEdicaoNosEditText();
+            setTitle("Edição de despesa");
+        } else {
+            setTitle("Cadastro de despesa");
+        }
+    }
+
+    private boolean estaEmEdicao() {
+        return getIntent().hasExtra("IdDespesaEditar");
+    }
+
+    private void setaOsDadosEmEdicaoNosEditText() {
+        Bundle extras = getIntent().getExtras();
+        Integer idDespesaEditar = (Integer) extras.get("IdDespesaEditar");
+        despesa = dao.findById(idDespesaEditar);
+        edtNomeDespesa.setText(despesa.getNome());
+        edtDescricaoDespesa.setText(despesa.getDescricao());
+        String data = formatter.format(despesa.getData()).replace("-", "/");
+        edtDataDespesa.setText(data);
+        edtValorDespesa.setText(String.valueOf(despesa.getValor()));
     }
 
     @Override
@@ -64,12 +81,26 @@ public class CadastroDespesaActivity extends AppCompatActivity {
     }
 
     private void salvaDespesaEFechaFormulario() {
-        despesa = new Despesa(edtNomeDespesa.getText().toString(),
-                edtDescricaoDespesa.getText().toString(),
-                new BigDecimal(edtValorDespesa.getText().toString()),
-                LocalDate.parse(edtDataDespesa.getText().toString().
-                        replace("/", "-"), formatter));
-        dao.adiciona(despesa);
+
+        if (!estaEmEdicao()) {
+            despesa = new Despesa(edtNomeDespesa.getText().toString(),
+                    edtDescricaoDespesa.getText().toString(),
+                    new BigDecimal(edtValorDespesa.getText().toString()),
+                    LocalDate.parse(edtDataDespesa.getText().toString().
+                            replace("/", "-"), formatter));
+        } else {
+            despesa.setNome(edtNomeDespesa.getText().toString());
+            despesa.setValor(new BigDecimal(edtValorDespesa.getText().toString()));
+            despesa.setData(LocalDate.parse(edtDataDespesa.getText().toString().
+                    replace("/", "-"), formatter));
+            despesa.setDescricao(edtDescricaoDespesa.getText().toString());
+        }
+        if (!estaEmEdicao()) {
+            dao.adiciona(despesa);
+        } else {
+            dao.edita(despesa);
+        }
+
         Toast.makeText(getBaseContext(), "Despesa salva com sucesso", Toast.LENGTH_LONG).show();
         finish();
     }

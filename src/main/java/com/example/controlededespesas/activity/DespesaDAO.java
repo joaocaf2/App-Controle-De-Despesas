@@ -16,6 +16,11 @@ public class DespesaDAO {
         contadorDeIds++;
     }
 
+    public void edita(Despesa despesa) {
+        int indice = despesas.indexOf(despesa);
+        despesas.set(indice, despesa);
+    }
+
     public Despesa findById(int idBuscado) {
         for (Despesa despesa : despesas) {
             if (despesa.getId() == idBuscado) {
