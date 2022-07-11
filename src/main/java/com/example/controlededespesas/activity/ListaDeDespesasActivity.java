@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +50,26 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         configuraAdapterListView();
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.lista_de_despesas_activity_lv_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        pagaDespesaSelecionada(item);
+        return super.onContextItemSelected(item);
+    }
+
+    private void pagaDespesaSelecionada(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Despesa despesa = despesasAdatper.getItem(menuInfo.position);
+        despesa.setStatus(true);
+        despesasAdatper.notifyDataSetChanged();
+        atualizaTextViewTotalDespesas();
+    }
+
     private void inicializaViews() {
         lvDespesas = findViewById(R.id.lista_de_despesas_activity_listViewDespesas);
         txtTotalDespesa = findViewById(R.id.lista_de_despesas_activity_textView_totalCalc);
@@ -69,6 +90,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
 
             }
         });
+        registerForContextMenu(lvDespesas);
     }
 
 

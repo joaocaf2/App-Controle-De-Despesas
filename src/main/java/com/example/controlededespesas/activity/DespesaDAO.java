@@ -38,8 +38,10 @@ public class DespesaDAO {
     public BigDecimal getTotalDespesas() {
         BigDecimal total = new BigDecimal("0");
         for (Despesa despesa : despesas) {
-            BigDecimal valor = despesa.getValor();
-            total = total.add(valor);
+            if (despesa.getStatus() == false) {
+                BigDecimal valor = despesa.getValor();
+                total = total.add(valor);
+            }
         }
         return total;
     }
