@@ -20,7 +20,7 @@ public class Despesa {
     }
 
 
-    public void setStatus(boolean status) {
+    public void pagar(boolean status) {
         this.status = status;
     }
 

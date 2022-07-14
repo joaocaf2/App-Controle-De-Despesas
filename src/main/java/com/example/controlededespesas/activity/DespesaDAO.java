@@ -4,6 +4,8 @@ import android.util.Log;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DespesaDAO {
@@ -45,6 +47,8 @@ public class DespesaDAO {
         }
         return total;
     }
+
+
 
     public Despesa findLast() {
         if (despesas.isEmpty()) return null;

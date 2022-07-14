@@ -4,7 +4,7 @@
 
     <item android:title="Cadastrar"
         android:id="@+id/cadastro_despesa_activity_menu_cadastrar"
-        android:icon="@drawable/ic_actioon_adiciona_despesa"
+        android:icon="@drawable/ic_action_adiciona_despesa"
         app:showAsAction="always"
         />
 </menu>

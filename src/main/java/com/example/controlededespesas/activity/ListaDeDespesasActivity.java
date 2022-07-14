@@ -1,21 +1,15 @@
 package com.example.controlededespesas.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,8 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.controlededespesas.R;
 import com.example.controlededespesas.adapter.DespesasAdatper;
-
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -65,7 +57,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
     private void pagaDespesaSelecionada(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Despesa despesa = despesasAdatper.getItem(menuInfo.position);
-        despesa.setStatus(true);
+        despesa.pagar(true);
         despesasAdatper.notifyDataSetChanged();
         atualizaTextViewTotalDespesas();
     }
@@ -107,7 +99,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         despesa.setDescricao("Comprei um pao do bao sô");
         despesa.setValor(new BigDecimal("40.80"));
         despesa.setData(LocalDate.now());
-        despesa.setStatus(false);
+        despesa.pagar(false);
         dao.adiciona(despesa);
     }
 
