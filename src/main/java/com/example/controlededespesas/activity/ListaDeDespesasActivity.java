@@ -1,8 +1,12 @@
 package com.example.controlededespesas.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,7 +54,16 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        pagaDespesaSelecionada(item);
+        new AlertDialog.Builder(this).
+                setTitle("Pagando despesa")
+                .setMessage("Tem certeza que deseja pagar esta despesa?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        pagaDespesaSelecionada(item);
+                    }
+                })
+                .setNegativeButton("Não", null).show();
         return super.onContextItemSelected(item);
     }
 
@@ -61,6 +74,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         despesasAdatper.notifyDataSetChanged();
         atualizaTextViewTotalDespesas();
     }
+
 
     private void inicializaViews() {
         lvDespesas = findViewById(R.id.lista_de_despesas_activity_listViewDespesas);
