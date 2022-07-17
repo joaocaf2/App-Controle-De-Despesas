@@ -1,11 +1,7 @@
 package com.example.controlededespesas.activity;
 
-import android.util.Log;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class DespesaDAO {

@@ -3,7 +3,8 @@ package com.example.controlededespesas.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,6 @@ import com.example.controlededespesas.R;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
@@ -42,4 +42,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        Intent intent = null;
+        if (itemId == R.id.main_activity_menu_cadastro_despesas) {
+            intent = new Intent(this, CadastroDespesaActivity.class);
+        }
+        if (itemId == R.id.main_activity_menu_lista_despesas) {
+            intent = new Intent(this, ListaDeDespesasActivity.class);
+        }
+        if (intent != null) {
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
