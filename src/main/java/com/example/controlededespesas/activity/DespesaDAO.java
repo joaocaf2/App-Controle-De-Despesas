@@ -33,7 +33,8 @@ public class DespesaDAO {
     }
 
     private void remove(Despesa despesa) {
-
+        Despesa despesaBuscada = findById(despesa.getId());
+        despesas.remove(despesaBuscada);
     }
 
 
@@ -47,7 +48,6 @@ public class DespesaDAO {
         }
         return total;
     }
-
 
 
     public Despesa findLast() {

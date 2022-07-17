@@ -1,5 +1,6 @@
 package com.example.controlededespesas.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,6 +43,14 @@ public class CadastroDespesaActivity extends AppCompatActivity {
             setTitle("Edição de despesa");
         } else {
             setTitle("Cadastro de despesa");
+            setaADataVindoDoCalendarNoEditText();
+        }
+    }
+
+    private void setaADataVindoDoCalendarNoEditText() {
+        if (getIntent().hasExtra("data")) {
+            String data = (String) getIntent().getExtras().get("data");
+            edtDataDespesa.setText(data);
         }
     }
 
@@ -62,8 +71,12 @@ public class CadastroDespesaActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.cadastro_de_despesa_activity_menu, menu);
+        inflaMenuDeCadastroDespesaActivity(menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void inflaMenuDeCadastroDespesaActivity(Menu menu) {
+        getMenuInflater().inflate(R.menu.cadastro_de_despesa_activity_menu, menu);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -88,21 +101,21 @@ public class CadastroDespesaActivity extends AppCompatActivity {
                     new BigDecimal(edtValorDespesa.getText().toString()),
                     LocalDate.parse(edtDataDespesa.getText().toString().
                             replace("/", "-"), formatter));
+            dao.adiciona(despesa);
+            Toast.makeText(getBaseContext(), "Despesa salva com sucesso", Toast.LENGTH_LONG).show();
         } else {
             despesa.setNome(edtNomeDespesa.getText().toString());
             despesa.setValor(new BigDecimal(edtValorDespesa.getText().toString()));
             despesa.setData(LocalDate.parse(edtDataDespesa.getText().toString().
                     replace("/", "-"), formatter));
             despesa.setDescricao(edtDescricaoDespesa.getText().toString());
-        }
-        if (!estaEmEdicao()) {
-            dao.adiciona(despesa);
-        } else {
             dao.edita(despesa);
+            Toast.makeText(getBaseContext(), "Despesa editada com sucesso", Toast.LENGTH_LONG).show();
         }
-
-        Toast.makeText(getBaseContext(), "Despesa salva com sucesso", Toast.LENGTH_LONG).show();
         finish();
+        Intent intentListaDeDespesas = new Intent(this,
+                ListaDeDespesasActivity.class);
+        startActivity(intentListaDeDespesas);
     }
 
     private boolean verificaSeTodosOsCamposForamPreenchidos() {
