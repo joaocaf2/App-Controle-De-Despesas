@@ -2,79 +2,77 @@ package com.example.controlededespesas.adapter;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlededespesas.R;
 import com.example.controlededespesas.activity.Despesa;
+
+import org.w3c.dom.Text;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class DespesasAdatper extends BaseAdapter {
+public class DespesasAdatper extends RecyclerView.Adapter<DespesasAdatper.DespesasViewHolder> {
+
     private List<Despesa> despesas = new ArrayList<Despesa>();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private Context context;
 
-    public DespesasAdatper(Context context) {
+    public DespesasAdatper(Context context, List<Despesa> despesas) {
         this.context = context;
+        this.despesas = despesas;
     }
 
-
-    @Override
-    public int getCount() {
-        return despesas.size();
-    }
-
-    @Override
-    public Despesa getItem(int posicao) {
-        return despesas.get(posicao);
-    }
-
-    @Override
-    public long getItemId(int posicao) {
-        return despesas.get(posicao).getId();
-    }
-
-    @Override
-    public View getView(int posicao, View view, ViewGroup viewGroup) {
-        View viewCriada = LayoutInflater.
-                from(context).inflate(R.layout.item_despesa, viewGroup, false);
-        setaOsDadosNasTextViews(posicao, viewCriada);
-        return viewCriada;
-    }
-
-    private void setaOsDadosNasTextViews(int posicao, View viewCriada) {
-        TextView txtNomeDespesa = viewCriada.findViewById(R.id.item_nome_despesa);
-        TextView txtDataDespesa = viewCriada.findViewById(R.id.item_data_despesa);
-        TextView txtValorDespesa = viewCriada.findViewById(R.id.item_valor_despesa);
-        TextView txtStatusDespesa = viewCriada.findViewById(R.id.item_status_despesa);
-
-        Despesa despesa = despesas.get(posicao);
-        txtNomeDespesa.setText("Nome: " + despesa.getNome());
-        String dataString = formatter.format(despesa.getData())
-                .replace("-", "/");
-        txtDataDespesa.setText("Data: " + dataString);
-        txtValorDespesa.setText("Valor: " + String.valueOf(despesa.getValor()));
-        String status = "";
-        if (despesa.getStatus() == true) {
-            status = "Pago";
-        } else {
-            status = "Pendente";
-        }
-        txtStatusDespesa.setText("Status: " + status);
-    }
 
     public void atualizaDados(List<Despesa> despesas) {
         this.despesas.clear();
         this.despesas.addAll(despesas);
         notifyDataSetChanged();
     }
+
+    @NonNull
+    @Override
+    public DespesasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View viewCriada = LayoutInflater.from(context).inflate(R.layout.item_despesa, parent, false);
+        return new DespesasViewHolder(viewCriada);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull DespesasAdatper.DespesasViewHolder holder, int position) {
+        Despesa despesa = despesas.get(position);
+        holder.preencheCampos(despesa);
+    }
+
+    @Override
+    public int getItemCount() {
+        return despesas.size();
+    }
+
+    class DespesasViewHolder extends RecyclerView.ViewHolder {
+        private TextView nomeDespesa;
+        private TextView valorDespesa;
+
+        public DespesasViewHolder(@NonNull View itemView) {
+            super(itemView);
+            nomeDespesa = itemView.findViewById(R.id.item_nome_despesa);
+            valorDespesa = itemView.findViewById(R.id.item_valor_despesa);
+        }
+
+        private void preencheCampos(Despesa despesa) {
+            nomeDespesa.setText(despesa.getNome());
+            valorDespesa.setText(String.valueOf(despesa.getValor()));
+        }
+    }
+
 }

@@ -10,13 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlededespesas.R;
 import com.example.controlededespesas.adapter.DespesasAdatper;
@@ -32,7 +32,7 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
     private TextView txtTotalDespesa;
 
     private DespesasAdatper despesasAdatper;
-    private ListView lvDespesas;
+    private RecyclerView lvDespesas;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,13 +58,14 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        pagaDespesaSelecionada(item);
+                        //    pagaDespesaSelecionada(item);
                     }
                 })
                 .setNegativeButton("Não", null).show();
         return super.onContextItemSelected(item);
     }
 
+    /*
     private void pagaDespesaSelecionada(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Despesa despesa = despesasAdatper.getItem(menuInfo.position);
@@ -73,6 +74,8 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
         atualizaTextViewTotalDespesas();
     }
 
+     */
+
 
     private void inicializaViews() {
         lvDespesas = findViewById(R.id.lista_de_despesas_activity_listViewDespesas);
@@ -80,20 +83,10 @@ public class ListaDeDespesasActivity extends AppCompatActivity {
     }
 
     private void configuraAdapterListView() {
-        despesasAdatper = new DespesasAdatper(this);
+        despesasAdatper = new DespesasAdatper(this, dao.findAll());
         lvDespesas.setAdapter(despesasAdatper);
-        lvDespesas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long l) {
-                Despesa despesa = (Despesa) adapterView.getItemAtPosition(posicao);
-                Integer idDespesa = despesa.getId();
-                Intent intent = new Intent(ListaDeDespesasActivity.this,
-                        CadastroDespesaActivity.class);
-                intent.putExtra("IdDespesaEditar", idDespesa);
-                startActivity(intent);
 
-            }
-        });
+
         registerForContextMenu(lvDespesas);
     }
 
